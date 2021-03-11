@@ -4,9 +4,9 @@ This project is for educational purposes only.
 The goal of this project is to create two seperate recommendation algoritms that create different tables with data.
 
 
-###### Content filtering:
+## Content filtering:
 A filter based on similar products.
 
 
-###### Collaborative filtering:
+## Collaborative filtering:
 A filter based on similar people.
