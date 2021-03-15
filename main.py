@@ -23,29 +23,26 @@ def execute_sql(sql):
     return records
 
 
-query_list = ["SELECT * FROM product LIMIT 4", "SELECT COUNT(*) as count, value from properties WHERE key like 'discount' GROUP BY value ORDER BY count"]
+query_list = ["SELECT * FROM product LIMIT 4;", "SELECT COUNT(*) as count, value from properties WHERE key like 'discount' GROUP BY value ORDER BY count LIMIT 10;"]
 
 
 def test_sql(records):
     for row in records:
         print(f'product id:  {row[0]}')
         print(f'name: {row[1]}')
-        print(f'price:  {row[2]}\n')
+        print(f'price:  {row[2]}')
+        print(f'brand: {row[3]}\n')
 
 
 test_sql(execute_sql(query_list[0]))
 
 
-# def count_promo_occurences():
-#     sql = "SELECT COUNT(*) as count, value from properties WHERE key like 'discount' GROUP BY value ORDER BY count"
-#     cur.execute(sql)
-#
-#     records = cur.fetchall()
-#
-#     for row in records:
-#         print(row)
+def count_promo_occurences(records):
+    for row in records:
+        print(row)
 
-# count_promo_occurences()
+count_promo_occurences(execute_sql(query_list[1]))
+
 
 '''
 To create tables:
