@@ -31,7 +31,7 @@ database_connection()
 
 def create_new_table(table):
     """
-    Creates new tables for every different kind of recommendation.
+    Creates new tables for every different kind of recommendation if table does not already exist.
 
         :param table: A string that represents the name of the table.
         :return: None.
@@ -58,26 +58,53 @@ def select_data(sql):
 
     return records
 
-query = "SELECT productid as id, value as promo, name as product_name, category, sub_category, sub_sub_category, gender as target_audience, selling_price as price FROM product pd INNER JOIN properties pp ON pd.id = pp.productid WHERE pp.key like 'discount' ORDER BY id ASC LIMIT 4;"
 
-
-def execute_sql(records):
+def insert_into_tables(records, table_name):
     """
+    Takes data from function select_data and inserts it into the correct table.
 
-        :param records: A list with records as tuples.
+        :param records: A list (records) with rows as tuples.
+        :param table_name: Table name in the form of a string.
         :return: None.
     """
+    print(table_name)
+    print(records)
+
     for row in records:
+        id                  = row[0]
+        promo               = row[1]
+        product_name        = row[2]
+        category            = row[3]
+        sub_category        = row[4]
+        sub_sub_category    = row[5]
+        target_audience     = row[6]
+        price               = row[7]
+
         print(row)
 
-        #insert into table.
+        sql = "INSERT INTO %s VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');"%(table_name, id, promo, product_name, category, sub_category, sub_sub_category, target_audience, price)
+
+        cur.execute(sql)
 
 
-#======================================= READ/RETURN FUNCTIONS NEED QUERY_LIST:
+def sub_sub_category_inserts():
+    """
+    Content filtering based on sub_sub_category and if the product has a promo.
+    Runs a function insert_into_tables with the right data for the different recommendation sub_sub_category tables.
+    """
+    names_sub_sub_category = ['Pijnstillers', 'Multivitaminen', 'Shampoo', 'Kat', 'Toiletpapier en vochtige doekjes', 'Elektronica accessoires', 'Condooms', 'Batterijen', 'Kunstgebitverzorging', 'Wasverzachter', 'Tandenstokers, floss & ragers', 'Meubels', 'Overige dierverzorging', 'Haaraccessoires', 'Lenzenvloeistof', 'Feestartikelen', 'Wattenschijfjes en wattenstaafjes', 'Reisziekte', 'Textielverf', 'Pleisters', 'Accessoires', 'Zwangerschap', None, 'Gewrichten', 'Oogschaduw', 'Reiniging vaatwasser', 'Nagellakremovers', 'Schoenen, slippers en sloffen', 'Voetschimmel', 'Foundation & concealer', 'Blush', 'Media', 'Scheerschuim en scheergel', 'Kinderkleding', 'Geschenksets', 'Zwangerschapsvitamines', 'Homeopathisch', 'Overige huishoudelijke artikelen', 'Mondverfrissers', 'Bad en douche', 'Kaarsen', 'Huishoudelijke apparaten', 'Voetdeodorant', 'Aftershave', 'Babyhaartjes, bad en douche', 'Afwasmiddel', 'Kaarten', 'Poeder', 'Carnaval', 'Keukenpapier', 'Nagellak', 'Mondwater & spray', 'Sieraden & bijoux', 'Make-up remover & reiniging', 'Bandages en windsels', 'Dames nachtmode', 'Vlekkenverwijderaars', 'Onzuivere huid & acne', 'Zwemluiers', 'Koffie', 'Deodorant', 'Tampons', 'Overige voedingssuplementen', 'Haarkuur en haarmasker', 'Kappersproducten', 'Schoonmaken', 'Muziek', 'Knutselen en hobby', 'Glijmiddelen en seksspeeltjes', 'Kerst', 'Kantoor benodigdheden', 'Dames brillen', 'Oor en mond', 'Chips', 'Anti-lekbekers', 'Speelgoed', 'Herengeuren', 'Bordspellen', 'Highlighters en bronzers', 'Toiletblokken', 'Luchtwegen en verkoudheid', 'Weerstand', 'Enkelvoudige vitaminen', 'Damesgeuren', 'Sportverzorging', 'Lipliner', 'Dames kleding', 'Dvd en blue-ray', 'Luierbroekjes en pyjamabroekjes', 'Tissues en zakdoekjes', 'Lipverzorging', 'Botten', 'Overige elektronika', 'Watten', 'Heren nachtmode', 'Scheermesjes', 'Make-up accessoires', 'Lenzen', 'Maaltijdvervangers', 'Blaas', 'Baby accessoires', 'Sportdranken', 'Sportvoeding', 'EHBO', 'Oogcreme en serum', 'Cartridges', 'Mini tandpasta', 'Ontspanning en rust', 'Babydoekjes', 'Kunstnagels', 'Foto en film', 'Gezichtsmasker man', 'Spierwrijfmiddelen', 'Man', 'Boeken', 'Baby speelgoed', 'Flesvoeding', 'Lampen', 'Insectenbestrijding', 'Babykleding', 'Mineralen', 'Haarserum', 'Keuken artikelen', 'Baby- en kinderaccessoires', 'Luizen', 'Tandpasta', 'Heren brillen', 'Verzorgende voetcremes', 'Dames ondergoed', 'Mascara', 'Kinderbestek', 'Flessen en flessenspenen', 'Reiniging', 'Eelt en harde huid', 'Supplementen', 'Dames accessoires', 'Ontharingscreme, wax en hars', 'Pasen', 'Vaatwastabletten', 'Outdoor en vrije tijd', 'Natuurlijke gezondheid', 'Beeld en geluid', 'Fopspenen', 'Handcremes', 'Tablets en computers', 'Huidverzorging en koortslip', 'Koffers', 'Nachtcreme', 'Vakantie', 'Leesbrillen', 'Maandverband', 'Mini scheerschuim en scheergel', 'Inlegkruisjes', 'Intiemverzorging', 'Vaginale schimmel', 'Wratten', 'Tuinartikelen', 'Mini bad en douche', 'Tassen', 'Mama verzorging', 'Voetverzorging', 'Hond', 'Verlichting', "Vibrators en dildo''s", 'Uiterlijk', 'Creme', 'Wenkbrauwproducten', 'Haarstyling', 'Wasmiddel', 'Oordoppen', 'Handzeep en handgel', 'Lipgloss', 'Kalknagels', 'Energie', 'Snacks en snoep', 'Stoppen met roken', 'Incontinentie', 'Mini olie en lotion', 'Heren ondergoed', 'Wondontsmetting', 'Kind', 'Luiers', 'Gezichtsmasker', 'Thee', 'Zonnebrand en aftersun', 'Lipstick', 'Energy drank', 'Zwangerschapstest en ovulatietest', 'Telefonie', 'Woonaccessoires', 'Heren accessoires', 'Aambeien', 'Scheren', 'Dagcreme', 'Mini shampoo en conditioner', 'Haarkleuring', 'Overige dranken', 'Wondverzorging', 'Allergieen', 'Bodylotion en bodymilk', 'Hart en visolie', 'Toilettassen', 'Elektrische tandenborstels', 'Toiletreinigers', 'Halloween', 'Huishoudelijk textiel', 'Tandenborstels', 'Panties en sokken', 'Luchtverfrissers', 'Valentijn', 'Sportartikelen', 'Conditioner', 'Mini deodorant en geuren', 'Persoonlijke verzorging', 'Sokken', 'Baby huidverzorging', 'Scheerapparaten', 'Patty Brard Collectie', 'Spijsvertering', 'Mini haarstyling', 'Reiniging man']
+
+    for name in names_sub_sub_category: # <= takes in names as they are mentioned in tables product and properties (with spaces etc.).
+        query = ("SELECT productid as id, value as promo, name as product_name, category, sub_category, sub_sub_category, gender as target_audience, selling_price as price FROM product pd INNER JOIN properties pp ON pd.id = pp.productid WHERE pp.key like 'discount' AND sub_sub_category like '%s' ORDER BY id ASC LIMIT 4;"%(name))
+
+    for i in sub_sub_category: #<= table_names slightly differ because of sql naming restrictions.
+        insert_into_tables(select_data(query), f"rec_{i}".lower())
+
+sub_sub_category_inserts()
 
 
 con.commit()
 cur.close()
 con.close()
 
-print(datetime.datetime.now() - time0)   # <= prints how long the program took.
+print(datetime.datetime.now() - time0)   # <= prints how long the program took to run.

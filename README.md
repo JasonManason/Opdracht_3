@@ -5,7 +5,7 @@ The goal of this project is to create two seperate recommendation algoritms that
 
 
 ## Content filtering:
-A filter based on similar products.
+A filter based on sub_sub_sub_category and if the product has a promo.
 
 
 ## Collaborative filtering:
