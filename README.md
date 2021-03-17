@@ -1,7 +1,7 @@
-This project is for educational purposes only.
+###### * This project is for educational purposes only.
 
 # Recommendation engine:
-The goal of this project is to create two seperate recommendation algoritms that create different tables with data.
+The goal of this project is to create an algorithm that creates new tables for the respective content pages and fills these with the four most relevant records based on the next filtering choices:
 
 
 ## Content filtering:
