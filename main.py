@@ -38,12 +38,10 @@ def create_new_table(table):
         :return: None.
     """
     if table in sub_sub_category:
-        print(f'sub {table}')
         cur.execute("CREATE TABLE IF NOT EXISTS rec_%s (id VARCHAR PRIMARY KEY, promo VARCHAR, product_name VARCHAR, sub_sub_category VARCHAR, target_audience VARCHAR, price int);" % (table))
 
     if table in personality_type:
         cur.execute("CREATE TABLE IF NOT EXISTS type_%s(id VARCHAR PRIMARY KEY, promo VARCHAR, product_name VARCHAR, sub_sub_category VARCHAR, target_audience VARCHAR, price int);" % (table))
-        print(f'type {table}')
 
 
 for i in sub_sub_category:
@@ -79,10 +77,24 @@ def insert_into_tables(records, table_name):
     print(table_name)
     print(records)
 
-    for row in records:
-        sql = ("INSERT INTO %s VALUES ('%s', '%s', '%s', '%s', '%s', '%s');"%(table_name, row[0], row[1], row[2], row[3], row[4], row[5]))
+    # print(records[0])
+    # print(records[1])
+    # print(records[2])
+    # print(records[3])
 
-        cur.execute(sql)
+    if records == []:
+        return
+
+    if records[0] == records[1]:
+        # sql = ("INSERT INTO %s VALUES ('%s', '%s', '%s', '%s', '%s', '%s');" % (table_name, records[0][0], records[0][1], records[0][2], records[0][3], records[0][4], records[0][5]))
+        cur.execute("INSERT INTO %s VALUES ('%s', '%s', '%s', '%s', '%s', '%s');" % (table_name, records[0][0], records[0][1], records[0][2], records[0][3], records[0][4], records[0][5]))
+
+    else:
+        for row in records:
+            # sql = ("INSERT INTO %s VALUES ('%s', '%s', '%s', '%s', '%s', '%s');"%(table_name, row[0], row[1], row[2], row[3], row[4], row[5]))
+            cur.execute("INSERT INTO %s VALUES ('%s', '%s', '%s', '%s', '%s', '%s');"%(table_name, row[0], row[1], row[2], row[3], row[4], row[5]))
+
+    #cur.execute(sql)
 
 
 def sub_sub_category_inserts():
@@ -95,7 +107,8 @@ def sub_sub_category_inserts():
     names_sub_sub_category = sorted(names_sub_sub_category, key=lambda empty: (empty is None, empty))
     sub_sub_category = sorted(sub_sub_category, key=lambda empty: (empty is None, empty))
 
-    for i in range(len(sub_sub_category)):
+    # for i in range(len(sub_sub_category)):
+    for i, value in enumerate(sub_sub_category):
         if names_sub_sub_category[i] == None:
             query = "SELECT productid as id, value as promo, name as product_name,sub_sub_category, gender as target_audience, selling_price as price FROM product pd INNER JOIN properties pp ON pd.id = pp.productid WHERE pp.key like 'discount' AND sub_sub_category like '%s' ORDER BY id ASC LIMIT 4;" % (names_sub_sub_category[i])
         else:
@@ -104,8 +117,33 @@ def sub_sub_category_inserts():
         insert_into_tables(select_data(query), f"rec_{sub_sub_category[i]}".lower())
 
 
-#sub_sub_category_inserts() #<= do not uncomment > already selected and inserted data.
+# sub_sub_category_inserts() #<= do not uncomment > already selected and inserted data.
 
+
+def personality_type_inserts():
+    personality_type = ['None_Unisex', 'None_None', 'None_Kinderen', 'None_Senior', 'None_B2B', 'None_Gezin','None_8719497835768', 'None_Baby', 'None_Man', 'None_Grootverpakking', 'None_Vrouw','leaver_Unisex', 'leaver_None', 'leaver_Kinderen', 'leaver_Senior', 'leaver_B2B','leaver_Gezin', 'leaver_8719497835768', 'leaver_Baby', 'leaver_Man', 'leaver_Grootverpakking','leaver_Vrouw', 'bouncer_Unisex', 'bouncer_None', 'bouncer_Kinderen', 'bouncer_Senior','bouncer_B2B', 'bouncer_Gezin', 'bouncer_8719497835768', 'bouncer_Baby', 'bouncer_Man','bouncer_Grootverpakking', 'bouncer_Vrouw', 'LEAVER_Unisex', 'LEAVER_None', 'LEAVER_Kinderen','LEAVER_Senior', 'LEAVER_B2B', 'LEAVER_Gezin', 'LEAVER_8719497835768', 'LEAVER_Baby','LEAVER_Man', 'LEAVER_Grootverpakking', 'LEAVER_Vrouw', 'FUN_SHOPPER_Unisex','FUN_SHOPPER_None', 'FUN_SHOPPER_Kinderen', 'FUN_SHOPPER_Senior', 'FUN_SHOPPER_B2B','FUN_SHOPPER_Gezin', 'FUN_SHOPPER_8719497835768', 'FUN_SHOPPER_Baby', 'FUN_SHOPPER_Man','FUN_SHOPPER_Grootverpakking', 'FUN_SHOPPER_Vrouw', 'JUDGER_Unisex', 'JUDGER_None','JUDGER_Kinderen', 'JUDGER_Senior', 'JUDGER_B2B', 'JUDGER_Gezin', 'JUDGER_8719497835768','JUDGER_Baby', 'JUDGER_Man', 'JUDGER_Grootverpakking', 'JUDGER_Vrouw', 'browser_Unisex','browser_None', 'browser_Kinderen', 'browser_Senior', 'browser_B2B', 'browser_Gezin','browser_8719497835768', 'browser_Baby', 'browser_Man', 'browser_Grootverpakking','browser_Vrouw', 'comparator_Unisex', 'comparator_None', 'comparator_Kinderen','comparator_Senior', 'comparator_B2B', 'comparator_Gezin', 'comparator_8719497835768','comparator_Baby', 'comparator_Man', 'comparator_Grootverpakking', 'comparator_Vrouw','SHOPPING_CART_Unisex', 'SHOPPING_CART_None', 'SHOPPING_CART_Kinderen', 'SHOPPING_CART_Senior','SHOPPING_CART_B2B', 'SHOPPING_CART_Gezin', 'SHOPPING_CART_8719497835768', 'SHOPPING_CART_Baby','SHOPPING_CART_Man', 'SHOPPING_CART_Grootverpakking', 'SHOPPING_CART_Vrouw', 'BROWSER_Unisex','BROWSER_None', 'BROWSER_Kinderen', 'BROWSER_Senior', 'BROWSER_B2B', 'BROWSER_Gezin','BROWSER_8719497835768', 'BROWSER_Baby', 'BROWSER_Man', 'BROWSER_Grootverpakking','BROWSER_Vrouw', 'BOUNCER_Unisex', 'BOUNCER_None', 'BOUNCER_Kinderen', 'BOUNCER_Senior','BOUNCER_B2B', 'BOUNCER_Gezin', 'BOUNCER_8719497835768', 'BOUNCER_Baby', 'BOUNCER_Man','BOUNCER_Grootverpakking', 'BOUNCER_Vrouw', 'judger_Unisex', 'judger_None', 'judger_Kinderen','judger_Senior', 'judger_B2B', 'judger_Gezin', 'judger_8719497835768', 'judger_Baby','judger_Man', 'judger_Grootverpakking', 'judger_Vrouw', 'buyer_Unisex', 'buyer_None','buyer_Kinderen', 'buyer_Senior', 'buyer_B2B', 'buyer_Gezin', 'buyer_8719497835768','buyer_Baby', 'buyer_Man', 'buyer_Grootverpakking', 'buyer_Vrouw', 'COMPARER_Unisex','COMPARER_None', 'COMPARER_Kinderen', 'COMPARER_Senior', 'COMPARER_B2B', 'COMPARER_Gezin','COMPARER_8719497835768', 'COMPARER_Baby', 'COMPARER_Man', 'COMPARER_Grootverpakking','COMPARER_Vrouw', 'BUYER_Unisex', 'BUYER_None', 'BUYER_Kinderen', 'BUYER_Senior', 'BUYER_B2B','BUYER_Gezin', 'BUYER_8719497835768', 'BUYER_Baby', 'BUYER_Man', 'BUYER_Grootverpakking','BUYER_Vrouw']
+    personality_type = sorted(personality_type)
+
+    for i, value in enumerate(personality_type):
+        value = value.lower()
+
+        if value.startswith('shopping_cart') or value.startswith('fun_shopper'):
+            segment = "_".join(value.split("_", 2)[:2])
+            gender = "_".join(value.split("_", 2)[2:])
+
+            query = "SELECT pp.productid as id, value as promo, name as product_name, sub_sub_category, gender as target_audience, selling_price as price FROM product pd INNER JOIN properties pp ON pd.id = pp.productid INNER JOIN viewed_before vb ON pd.id = vb.productid INNER JOIN profile pf ON pf.profile_id = vb.profileprofile_id WHERE pp.key like 'discount' AND (pd.gender like '%s' OR pd.gender like UPPER('%s')) AND (pf.segment like '%s'OR pf.segment like UPPER('%s')) LIMIT 4;" % (gender, gender, segment, segment)
+
+        else:
+            value = value.split("_", 1)
+            segment = value[0]
+            gender = value[1]
+
+            query = "SELECT pp.productid as id, value as promo, name as product_name, sub_sub_category, gender as target_audience, selling_price as price FROM product pd INNER JOIN properties pp ON pd.id = pp.productid INNER JOIN viewed_before vb ON pd.id = vb.productid INNER JOIN profile pf ON pf.profile_id = vb.profileprofile_id WHERE pp.key like 'discount' AND (pd.gender like '%s' OR pd.gender like UPPER('%s')) AND (pf.segment like '%s'OR pf.segment like UPPER('%s')) LIMIT 4" % (gender, gender, segment, segment)
+
+        insert_into_tables(select_data(query), f"type_{personality_type[i]}".lower())
+
+
+personality_type_inserts()
 
 
 con.commit()
