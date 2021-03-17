@@ -1,5 +1,6 @@
 import datetime
 import psycopg2
+import itertools
 
 time0 = datetime.datetime.now()
 content = ['category', 'sub_category', 'sub_sub_category', 'properties']
@@ -41,8 +42,10 @@ def create_new_table(table):
     cur.execute(sql)
 
 
-for i in sub_sub_category:
-     create_new_table(i)
+# for i in sub_sub_category:
+#      create_new_table(i)
+
+
 
 
 #======================================= SELECT AND INSERT DATA:
@@ -96,9 +99,38 @@ def sub_sub_category_inserts():
         insert_into_tables(select_data(query), f"rec_{sub_sub_category[i]}".lower())
 
 
-sub_sub_category_inserts()
+#sub_sub_category_inserts() #<= do not uncomment > already selected and inserted data.
 
 
+
+sql_segment = "SELECT DISTINCT segment FROM profile";
+cur.execute(sql_segment)
+distinct_segments = cur.fetchall()
+
+#print(distinct_segments)
+for segment in distinct_segments:
+    for i in segment:
+        print(i)
+
+sql_gender = "SELECT DISTINCT gender FROM product";
+cur.execute(sql_gender)
+distinct_genders = cur.fetchall()
+
+#print(distinct_genders)
+for gender in distinct_genders:
+    for j in gender:
+        if j != '8719497835768':
+            print(j)
+
+combo = list(itertools.product(distinct_segments, distinct_genders))
+print(combo)
+
+combo_gender_segment = [((None,), ('Unisex',)), ((None,), (None,)), ((None,), ('Kinderen',)), ((None,), ('Senior',)), ((None,), ('B2B',)), ((None,), ('Gezin',)), ((None,), ('8719497835768',)), ((None,), ('Baby',)), ((None,), ('Man',)), ((None,), ('Grootverpakking',)), ((None,), ('Vrouw',)), (('leaver',), ('Unisex',)), (('leaver',), (None,)), (('leaver',), ('Kinderen',)), (('leaver',), ('Senior',)), (('leaver',), ('B2B',)), (('leaver',), ('Gezin',)), (('leaver',), ('8719497835768',)), (('leaver',), ('Baby',)), (('leaver',), ('Man',)), (('leaver',), ('Grootverpakking',)), (('leaver',), ('Vrouw',)), (('bouncer',), ('Unisex',)), (('bouncer',), (None,)), (('bouncer',), ('Kinderen',)), (('bouncer',), ('Senior',)), (('bouncer',), ('B2B',)), (('bouncer',), ('Gezin',)), (('bouncer',), ('8719497835768',)), (('bouncer',), ('Baby',)), (('bouncer',), ('Man',)), (('bouncer',), ('Grootverpakking',)), (('bouncer',), ('Vrouw',)), (('LEAVER',), ('Unisex',)), (('LEAVER',), (None,)), (('LEAVER',), ('Kinderen',)), (('LEAVER',), ('Senior',)), (('LEAVER',), ('B2B',)), (('LEAVER',), ('Gezin',)), (('LEAVER',), ('8719497835768',)), (('LEAVER',), ('Baby',)), (('LEAVER',), ('Man',)), (('LEAVER',), ('Grootverpakking',)), (('LEAVER',), ('Vrouw',)), (('FUN_SHOPPER',), ('Unisex',)), (('FUN_SHOPPER',), (None,)), (('FUN_SHOPPER',), ('Kinderen',)), (('FUN_SHOPPER',), ('Senior',)), (('FUN_SHOPPER',), ('B2B',)), (('FUN_SHOPPER',), ('Gezin',)), (('FUN_SHOPPER',), ('8719497835768',)), (('FUN_SHOPPER',), ('Baby',)), (('FUN_SHOPPER',), ('Man',)), (('FUN_SHOPPER',), ('Grootverpakking',)), (('FUN_SHOPPER',), ('Vrouw',)), (('JUDGER',), ('Unisex',)), (('JUDGER',), (None,)), (('JUDGER',), ('Kinderen',)), (('JUDGER',), ('Senior',)), (('JUDGER',), ('B2B',)), (('JUDGER',), ('Gezin',)), (('JUDGER',), ('8719497835768',)), (('JUDGER',), ('Baby',)), (('JUDGER',), ('Man',)), (('JUDGER',), ('Grootverpakking',)), (('JUDGER',), ('Vrouw',)), (('browser',), ('Unisex',)), (('browser',), (None,)), (('browser',), ('Kinderen',)), (('browser',), ('Senior',)), (('browser',), ('B2B',)), (('browser',), ('Gezin',)), (('browser',), ('8719497835768',)), (('browser',), ('Baby',)), (('browser',), ('Man',)), (('browser',), ('Grootverpakking',)), (('browser',), ('Vrouw',)), (('comparator',), ('Unisex',)), (('comparator',), (None,)), (('comparator',), ('Kinderen',)), (('comparator',), ('Senior',)), (('comparator',), ('B2B',)), (('comparator',), ('Gezin',)), (('comparator',), ('8719497835768',)), (('comparator',), ('Baby',)), (('comparator',), ('Man',)), (('comparator',), ('Grootverpakking',)), (('comparator',), ('Vrouw',)), (('SHOPPING_CART',), ('Unisex',)), (('SHOPPING_CART',), (None,)), (('SHOPPING_CART',), ('Kinderen',)), (('SHOPPING_CART',), ('Senior',)), (('SHOPPING_CART',), ('B2B',)), (('SHOPPING_CART',), ('Gezin',)), (('SHOPPING_CART',), ('8719497835768',)), (('SHOPPING_CART',), ('Baby',)), (('SHOPPING_CART',), ('Man',)), (('SHOPPING_CART',), ('Grootverpakking',)), (('SHOPPING_CART',), ('Vrouw',)), (('BROWSER',), ('Unisex',)), (('BROWSER',), (None,)), (('BROWSER',), ('Kinderen',)), (('BROWSER',), ('Senior',)), (('BROWSER',), ('B2B',)), (('BROWSER',), ('Gezin',)), (('BROWSER',), ('8719497835768',)), (('BROWSER',), ('Baby',)), (('BROWSER',), ('Man',)), (('BROWSER',), ('Grootverpakking',)), (('BROWSER',), ('Vrouw',)), (('BOUNCER',), ('Unisex',)), (('BOUNCER',), (None,)), (('BOUNCER',), ('Kinderen',)), (('BOUNCER',), ('Senior',)), (('BOUNCER',), ('B2B',)), (('BOUNCER',), ('Gezin',)), (('BOUNCER',), ('8719497835768',)), (('BOUNCER',), ('Baby',)), (('BOUNCER',), ('Man',)), (('BOUNCER',), ('Grootverpakking',)), (('BOUNCER',), ('Vrouw',)), (('judger',), ('Unisex',)), (('judger',), (None,)), (('judger',), ('Kinderen',)), (('judger',), ('Senior',)), (('judger',), ('B2B',)), (('judger',), ('Gezin',)), (('judger',), ('8719497835768',)), (('judger',), ('Baby',)), (('judger',), ('Man',)), (('judger',), ('Grootverpakking',)), (('judger',), ('Vrouw',)), (('buyer',), ('Unisex',)), (('buyer',), (None,)), (('buyer',), ('Kinderen',)), (('buyer',), ('Senior',)), (('buyer',), ('B2B',)), (('buyer',), ('Gezin',)), (('buyer',), ('8719497835768',)), (('buyer',), ('Baby',)), (('buyer',), ('Man',)), (('buyer',), ('Grootverpakking',)), (('buyer',), ('Vrouw',)), (('COMPARER',), ('Unisex',)), (('COMPARER',), (None,)), (('COMPARER',), ('Kinderen',)), (('COMPARER',), ('Senior',)), (('COMPARER',), ('B2B',)), (('COMPARER',), ('Gezin',)), (('COMPARER',), ('8719497835768',)), (('COMPARER',), ('Baby',)), (('COMPARER',), ('Man',)), (('COMPARER',), ('Grootverpakking',)), (('COMPARER',), ('Vrouw',)), (('BUYER',), ('Unisex',)), (('BUYER',), (None,)), (('BUYER',), ('Kinderen',)), (('BUYER',), ('Senior',)), (('BUYER',), ('B2B',)), (('BUYER',), ('Gezin',)), (('BUYER',), ('8719497835768',)), (('BUYER',), ('Baby',)), (('BUYER',), ('Man',)), (('BUYER',), ('Grootverpakking',)), (('BUYER',), ('Vrouw',))]
+for c in combo:
+    print(c)
+    combo_gender_segment.append(c)
+
+print(combo_gender_segment)
 
 
 
