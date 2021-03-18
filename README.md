@@ -23,6 +23,6 @@ These products are all put together from the same combination and IF the product
 
 Two result tables:
 
-![plot](./images/type_judger_baby.JPG)
+![plot](./images/type_example_table_judger_baby.JPG)
 
-![plot](./images/type_fun_shopper_man.JPG)
+![plot](./images/type_example_table_fun_shopper_man.JPG)
