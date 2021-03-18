@@ -17,6 +17,12 @@ Two result tables:
 ## Collaborative filtering:
 A filter based on similar people.
 
-There are 165 different 'personality types' based on a combination of segment (15) and genders (11).
-Based on a persons most viewed products, a personality type is assigned to a profile.
+There are different 'personality types' based on a combination of segment and genders, "None" segments not included.
 Each personality type has its own recommendation table, consisting of 4 products.
+These products are all put together from the same combination and IF the products have a promo.
+
+Two result tables:
+
+![plot](./images/type_judger_baby.JPG)
+
+![plot](./images/type_fun_shopper_man.JPG)
